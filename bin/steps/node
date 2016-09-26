@@ -6,8 +6,8 @@
 source $BIN_DIR/utils
 
 if [ ! -f $BUILD_DIR/.heroku/node-version ]; then
-  # Resolve node version using semver.io
-  NODE_VERSION=$(curl --silent --get https://semver.io/node/stable)
+  # Set node version
+  NODE_VERSION=6.6.0
   puts-step "Resolved node version: $NODE_VERSION"
 
   # Download node from Heroku's S3 mirror of nodejs.org/dist

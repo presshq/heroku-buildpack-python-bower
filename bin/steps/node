@@ -5,26 +5,24 @@
 # Syntax sugar.
 source $BIN_DIR/utils
 
-if [ ! -f $BUILD_DIR/.heroku/node-version ]; then
-  # Set node version
-  NODE_VERSION=6.6.0
-  puts-step "Resolved node version: $NODE_VERSION"
+# Set node version
+NODE_VERSION=6.6.0
+puts-step "Resolved node version: $NODE_VERSION"
 
-  # Download node from Heroku's S3 mirror of nodejs.org/dist
-  puts-step "Downloading and installing node"
-  NODE_URL="http://s3pository.heroku.com/node/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz"
-  curl $NODE_URL -s -o - | tar xzf - -C $BUILD_DIR
+# Download node from Heroku's S3 mirror of nodejs.org/dist
+puts-step "Downloading and installing node"
+NODE_URL="http://s3pository.heroku.com/node/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz"
+curl $NODE_URL -s -o - | tar xzf - -C $BUILD_DIR
 
-  # Move node (and npm) into $BUILD_DIR/.heroku/vendor and make them executable
-  mkdir -p $BUILD_DIR/.heroku/vendor
-  mv $BUILD_DIR/node-v$NODE_VERSION-linux-x64 $BUILD_DIR/.heroku/vendor/node
-  chmod +x $BUILD_DIR/.heroku/vendor/node/bin/*
+# Move node (and npm) into $BUILD_DIR/.heroku/vendor and make them executable
+mkdir -p $BUILD_DIR/.heroku/vendor
+mv $BUILD_DIR/node-v$NODE_VERSION-linux-x64 $BUILD_DIR/.heroku/vendor/node
+chmod +x $BUILD_DIR/.heroku/vendor/node/bin/*
 
-  # Save resolved node version in the slug for later reference
-  echo $NODE_VERSION > $BUILD_DIR/.heroku/node-version
-fi
+# Save resolved node version in the slug for later reference
+echo $NODE_VERSION > $BUILD_DIR/.heroku/node-version
 
-PATH=$PATH:$BUILD_DIR/.heroku/vendor/node/bin
+PATH=$BUILD_DIR/.heroku/vendor/node/bin:$PATH
 
 if [ ! -f $BUILD_DIR/.heroku/bower-version ]; then
   # Install bower

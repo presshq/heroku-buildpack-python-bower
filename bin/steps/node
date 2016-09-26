@@ -6,7 +6,7 @@
 source $BIN_DIR/utils
 
 # Set node version
-NODE_VERSION=6.6.0
+NODE_VERSION="6.6.0"
 puts-step "Resolved node version: $NODE_VERSION"
 
 # Download node from Heroku's S3 mirror of nodejs.org/dist

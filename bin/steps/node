@@ -27,10 +27,10 @@ PATH=$BUILD_DIR/.heroku/vendor/node/bin:$PATH
 if [ ! -f $BUILD_DIR/.heroku/bower-version ]; then
   # Install bower
   puts-step "Downloading and installing bower"
-  npm install -g bower 2>&1 | indent
+  $BUILD_DIR/.heroku/vendor/node/bin/npm install -g bower 2>&1 | indent
 
   # Save installed bower version in the slug for later reference
-  npm list -g --depth=0 | grep bower | cut -d @ -f 2 > $BUILD_DIR/.heroku/bower-version
+  $BUILD_DIR/.heroku/vendor/node/bin/npm list -g --depth=0 | grep bower | cut -d @ -f 2 > $BUILD_DIR/.heroku/bower-version
 fi
 
 # Install bower packages
@@ -45,9 +45,9 @@ if [ -f $BUILD_DIR/gulpfile.js ]; then
 
     # Install gulp locally.
     echo "-----> Installing package.json packages"
-    npm install
+    $BUILD_DIR/.heroku/vendor/node/bin/npm install
     echo "-----> Installing gulp"
-    npm install gulp
+    $BUILD_DIR/.heroku/vendor/node/bin/npm install gulp
 
     echo "-----> Running 'gulp production'"
     $BUILD_DIR/node_modules/.bin/gulp production
